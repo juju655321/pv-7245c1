@@ -1,7 +1,7 @@
 /* Mines & Megawatts — WV prototype. MapLibre GL JS + OpenFreeMap. No Esri code; look borrowed from ArcGIS dashboards as a design reference. */
 (function(){
 'use strict';
-const PWH='ce15069e664c226c2bed0e2851d320480161b39c6707e72e56e832a0177838af', SALT='lodeandload-preview:';
+const PWH='c5eff3e47d0941b8f8cbd9346e3cab595bff54319364ed39662756af33146e5f', SALT='lodeandload-preview:';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const fmt=(n,d=0)=>n==null?'—':Number(n).toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d});
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
