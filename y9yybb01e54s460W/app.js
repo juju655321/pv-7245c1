@@ -1,4 +1,4 @@
-/* Lode & Load — WV prototype. MapLibre GL JS + OpenFreeMap. No Esri code; look borrowed from ArcGIS dashboards as a design reference. */
+/* Mines & Megawatts — WV prototype. MapLibre GL JS + OpenFreeMap. No Esri code; look borrowed from ArcGIS dashboards as a design reference. */
 (function(){
 'use strict';
 const PWH='ce15069e664c226c2bed0e2851d320480161b39c6707e72e56e832a0177838af', SALT='lodeandload-preview:';
@@ -8,6 +8,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;',
 const A=(u,t)=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`;
 const isPhone=()=>matchMedia('(max-width:760px)').matches;
 const WVGES_MINED='https://atlas.wvgs.wvnet.edu/arcgis/rest/services/Coal_Web_Mercator/All_Mining_WM/MapServer';
+const USGS_RELIEF='https://basemap.nationalmap.gov/arcgis/rest/services/USGSShadedReliefOnly/MapServer';
 const WVGES_WELLS='https://atlas2.wvgs.wvnet.edu/server/rest/services/OilGas_WVOG/WVOG_Layer/MapServer/4';
 const S={dc:null,coal:null,min:null,pp:null,tx:null,alpr:null,cty:null,st:null};
 let map, county=null, coalYear=null, mineFilter={active:true,idle:true,abandoned:false}, minGroups={copper:true,battery:true,ree:true,other:false};
@@ -46,13 +47,18 @@ class HomeCtl{onAdd(m){const d=document.createElement('div');d.className='maplib
 function pad(){return isPhone()?{top:110,bottom:180,left:20,right:20}:{top:110,bottom:40,left:($('body').classList.contains('nopanel')?20:330),right:220}}
 
 /* ---------- layers ---------- */
-const LAY={dc:true,coal:true,mined:false,min:false,wells:false,alpr:false,pp:false,tx:false};
+const LAY={dc:true,coal:true,lidar:false,mined:false,min:false,wells:false,alpr:false,pp:false,tx:false};
 function addBase(){
   map.addSource('cty',{type:'geojson',data:S.cty,promoteId:'fips'});
   const wc=['match',['get','fips']]; S.cty.features.forEach(f=>{wc.push(f.properties.fips,(S.st.county[f.properties.name]||{}).wells||0)}); wc.push(0);
   map.addLayer({id:'cty-wells',type:'fill',source:'cty',maxzoom:9.5,paint:{'fill-color':['interpolate',['linear'],wc,0,'#1d1730',1000,'#3b2a66',4000,'#6a46b0',8000,'#9a6ee0',12000,'#d4b8ff'],'fill-opacity':0.55},layout:{visibility:'none'}});
   map.addLayer({id:'cty-line',type:'line',source:'cty',paint:{'line-color':'#8a8a8a','line-width':['interpolate',['linear'],['zoom'],6,0.4,10,1.2],'line-opacity':0.6}});
   map.addLayer({id:'cty-sel',type:'line',source:'cty',paint:{'line-color':'#3fa9f5','line-width':2.5},filter:['==',['get','fips'],'']});
+  // Lidar terrain: USGS 3DEP shaded relief, cached tiles (public domain). Sits just above the basemap land fills, under roads, labels and all data.
+  map.addSource('lidar',{type:'raster',tiles:[USGS_RELIEF+'/tile/{z}/{y}/{x}'],tileSize:256,minzoom:5,maxzoom:16,
+    attribution:'Elevation: <a href="https://www.usgs.gov/3d-elevation-program" target="_blank">USGS 3D Elevation Program (3DEP)</a>, public domain'});
+  const under=map.getStyle().layers.find(l=>l.id==='waterway')?'waterway':undefined;
+  map.addLayer({id:'lidar',type:'raster',source:'lidar',paint:{'raster-opacity':lidarOp,'raster-brightness-max':0.5,'raster-contrast':0.45,'raster-saturation':-1,'raster-fade-duration':150},layout:{visibility:'none'}},under);
   map.addSource('mined',{type:'raster',tiles:[WVGES_MINED+'/export?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=256,256&format=png32&transparent=true&layers=show:1,2&f=image'],tileSize:256,minzoom:7,
     attribution:'Mined areas: <a href="https://www.wvgs.wvnet.edu/www/coal/cbmp/coalims.html" target="_blank">WV Geological &amp; Economic Survey, Coal Bed Mapping Program</a>'});
   map.addLayer({id:'mined',type:'raster',source:'mined',paint:{'raster-opacity':0.55},layout:{visibility:'none'}});
@@ -92,11 +98,11 @@ async function ensure(k){
 }
 function applyVis(){
   const v=(id,on)=>{if(map.getLayer(id)) map.setLayoutProperty(id,'visibility',on?'visible':'none')};
-  ['dc','dc-halo','dc-lbl'].forEach(i=>v(i,LAY.dc)); v('coal',LAY.coal); v('mined',LAY.mined); v('min',LAY.min); v('alpr',LAY.alpr); v('pp',LAY.pp); v('tx',LAY.tx);
+  ['dc','dc-halo','dc-lbl'].forEach(i=>v(i,LAY.dc)); v('coal',LAY.coal); v('mined',LAY.mined); v('lidar',LAY.lidar); v('min',LAY.min); v('alpr',LAY.alpr); v('pp',LAY.pp); v('tx',LAY.tx);
   ['cty-wells','wells-cl','wells-cn','wells-pt'].forEach(i=>v(i,LAY.wells));
   renderLegend();
 }
-async function setLayer(k,on){LAY[k]=on; if(on&&k!=='dc'&&k!=='mined') await ensure(k); applyVis(); $$(`input[data-lay="${k}"]`).forEach(i=>i.checked=on); renderCards()}
+async function setLayer(k,on){LAY[k]=on; if(on&&!['dc','mined','lidar'].includes(k)) await ensure(k); applyVis(); $$(`input[data-lay="${k}"]`).forEach(i=>i.checked=on); renderCards()}
 function applyMineFilter(){if(!map.getLayer('coal'))return; const gs=Object.keys(mineFilter).filter(k=>mineFilter[k]);
   const f=['all',['in',['get','g'],['literal',gs]]]; if(coalYear) f.push(['in','|'+coalYear+'|',['coalesce',['get','yrs'],'']]);
   map.setFilter('coal',f)}
@@ -134,11 +140,16 @@ const SECS=[
  {k:'Context',t:'Power grid',c:'var(--grid)',lay:'pp',body:()=>sw('pp','Power plants (EIA-860M, Sep 2026)')+sw('tx','Transmission lines 69 kV+ (OSM)')+
    `<p class="note">Plants: ${A('https://www.eia.gov/electricity/data/eia860m/','EIA-860M')} (public domain). Lines: © OpenStreetMap contributors (ODbL), as on ${A('https://openinframap.org/copyright','Open Infrastructure Map')}.</p>`},
 ];
+SECS.push({k:'Context',t:'Terrain',c:'var(--terrain)',lay:'lidar',body:()=>sw('lidar','Lidar terrain (USGS 3DEP)')+
+   `<label class="rng">Opacity <input type="range" id="lidar-op" min="0.1" max="1" step="0.05" value="${lidarOp}" aria-label="Lidar terrain opacity"> <output id="lidar-op-v">${Math.round(lidarOp*100)}%</output></label>
+   <p class="note">Shaded relief from bare-earth elevation, blended softly under the map so ridges, hollows and strip-mine benches show. Zoom in near Logan or Boone County with Coal on. Elevation: ${A('https://www.usgs.gov/3d-elevation-program','USGS 3D Elevation Program (3DEP)')}, public domain; tiles from ${A('https://basemap.nationalmap.gov/arcgis/rest/services/USGSShadedReliefOnly/MapServer','The National Map shaded relief service')}. <span class="warn">⚠ Cached tiles stop at zoom 16 and are drawn from the 3DEP seamless elevation, so they are smoother than raw 1 m lidar.</span></p>`});
+let lidarOp=0.45;
 function sw(k,label){return `<label class="sw"><input type="checkbox" data-lay="${k}" ${LAY[k]?'checked':''}> ${esc(label)}</label>`}
 function buildPanel(){
   $('#sections').innerHTML=SECS.map((s,i)=>`<div class="sec ${i===0?'open':''}" data-i="${i}"><button class="sec-h" aria-expanded="${i===0}"><span class="dot" style="background:${s.c}"></span><span><span class="k">${s.k}</span><span class="t">${s.t}</span></span><span></span><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="sec-b">${s.body()}</div></div>`).join('')+
-   `<div class="sec"><div class="sec-b" style="display:block"><p class="note">Working name; not final. Private prototype, Nov 16, 2026. ${A('#','Sources & method')}</p></div></div>`;
+   `<div class="sec"><div class="sec-b" style="display:block"><p class="note">Mines &amp; Megawatts (formerly Lode &amp; Load). Private prototype, Nov 16, 2026. ${A('#','Sources & method')}</p></div></div>`;
   $$('.sec-h').forEach(b=>b.onclick=()=>{const s=b.parentElement, i=+s.dataset.i, o=!s.classList.contains('open'); s.classList.toggle('open',o); b.setAttribute('aria-expanded',o); if(o) setTimeout(()=>s.scrollIntoView({block:'start',behavior:'auto'}),0); if(o&&SECS[i].lay&&!LAY[SECS[i].lay]) setLayer(SECS[i].lay,true)});
+  $('#sections').addEventListener('input',e=>{if(e.target.id==='lidar-op'){lidarOp=+e.target.value; $('#lidar-op-v').textContent=Math.round(lidarOp*100)+'%'; if(map&&map.getLayer('lidar')) map.setPaintProperty('lidar','raster-opacity',lidarOp)}});
   $('#sections').addEventListener('change',e=>{const k=e.target.dataset.lay; if(k) setLayer(k,e.target.checked)});
   $('#sections').addEventListener('click',e=>{const t=e.target.closest('button,a'); if(!t)return;
     if(t.dataset.mf){mineFilter[t.dataset.mf]=!mineFilter[t.dataset.mf];t.classList.toggle('on');applyMineFilter();renderCards()}
@@ -214,6 +225,7 @@ function renderLegend(){
   const L=[];
   if(LAY.dc) L.push('<div class="lgt">Data centers</div>'+[['#ff6b5a','Proposed'],['#c08cff','Permitted'],['#ffd34d','Under construction'],['#4cc38a','Operating']].map(([c,t])=>`<div class="lg"><i style="background:${c}"></i>${t}</div>`).join('')+'<div class="note">Size = stated MW</div>');
   if(LAY.coal) L.push('<div class="lgt">Coal mines</div>'+[['#f5c242','Active'],['#b88a2e','Idle'],['#6d6249','Abandoned']].map(([c,t])=>`<div class="lg"><i style="background:${c}"></i>${t}</div>`).join(''));
+  if(LAY.lidar) L.push('<div class="lg"><i class="sq" style="background:linear-gradient(135deg,#d8d8d8,#3a3a3a)"></i>Lidar terrain (USGS 3DEP)</div>');
   if(LAY.mined) L.push('<div class="lg"><i class="sq" style="background:#7a6a50"></i>Mined areas (WVGES)</div>');
   if(LAY.min) L.push('<div class="lgt">Minerals</div>'+[['#e07b39','Copper'],['#2fc4b2','Battery'],['#d65cff','Rare earths'],['#8fa3b8','Other critical']].map(([c,t])=>`<div class="lg"><i style="background:${c}"></i>${t}</div>`).join(''));
   if(LAY.wells) L.push('<div class="lgt">Wells</div><div class="lg"><i class="sq" style="background:linear-gradient(90deg,#1d1730,#d4b8ff)"></i>Wells per county</div>'+[['#b07cff','Gas'],['#3dd68c','Oil'],['#4fc3f7','Oil & gas'],['#777','Dry']].map(([c,t])=>`<div class="lg"><i style="background:${c}"></i>${t}</div>`).join(''));
@@ -276,12 +288,13 @@ function about(){
   const sm=S.dc.summary,m=sm.method;
   $('#about').innerHTML=`<div class="in"><button class="iconbtn x" style="position:absolute;right:8px;top:8px" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   <h2 style="margin-top:0">Sources, licenses and method</h2>
-  <p><b>For information only. Not for engineering, legal, or investment decisions.</b> ⚠ marks anything unverified. Lode &amp; Load is a working name.</p>
+  <p><b>For information only. Not for engineering, legal, or investment decisions.</b> ⚠ marks anything unverified. Mines &amp; Megawatts (formerly Lode &amp; Load).</p>
   <h3>Data center cost estimate</h3><p>Annual kWh = stated MW × 1,000 × 8,760 h × ${m.load_factor*100}% load. Power cost = kWh × ${(m.rate_usd_kwh*100).toFixed(2)}¢ (${A(m.rate_url,'EIA Electric Power Monthly Table 5.6.A, WV industrial, Aug 2026')}). On-site water = kWh × ${m.wue_l_kwh} L/kWh (${A(m.lbnl_url,'LBNL 2024 report')}). Real filed figures (e.g. the Ridgeline air permit) are shown first on each card. De-duplicated stated total: ${fmt(sm.total_mw,1)} MW ≈ $${fmt(sm.est.cost_musd)}M/yr ≈ ${fmt(sm.est.twh,1)} TWh (${fmt(sm.est.share_sales_pct)}% of WV 2024 retail sales of ${sm.wv_sales_twh} TWh).</p>
   <table><tr><th>Layer</th><th>Source</th><th>License</th></tr>
   <tr><td>Data centers</td><td>${A('https://datacentersnearme.org/data','DataCentersNearMe')}; ${A('https://datacenterdata.com/data/','DataCenterData')}; ${A('https://publicevidence.org/data/national-data-center-public-records','Public Evidence Project')} (0 WV records); ${A('https://im3.pnnl.gov/datacenter-atlas','PNNL IM3')} via OSM; WVDEP air permit R13-3713</td><td>ODbL 1.0 / CC BY 4.0 — kept in its own file (datacenters_odbl.geojson)</td></tr>
   <tr><td>Coal mines</td><td>${A('https://arlweb.msha.gov/OpenGovernmentData/OGIMSHA.asp','MSHA Mines data set')}; ${A('https://www.eia.gov/coal/data.cfm','EIA coal production')}</td><td>US public domain</td></tr>
   <tr><td>Mined areas</td><td>${A('https://www.wvgs.wvnet.edu/www/coal/cbmp/coalims.html','West Virginia Geological and Economic Survey, Coal Bed Mapping Program')} (live map service)</td><td>Public data; cite WVGES ⚠ written terms pending</td></tr>
+  <tr><td>Lidar terrain</td><td>Elevation: ${A('https://www.usgs.gov/3d-elevation-program','USGS 3D Elevation Program (3DEP)')}, public domain; ${A('https://basemap.nationalmap.gov/arcgis/rest/services/USGSShadedReliefOnly/MapServer','USGSShadedReliefOnly tiles')}</td><td>US public domain</td></tr>
   <tr><td>Minerals</td><td>${A('https://mrdata.usgs.gov/mrds/','USGS MRDS')}; WVU / NETL rare earth sites</td><td>US public domain</td></tr>
   <tr><td>Oil &amp; gas wells</td><td>${A(WVGES_WELLS,'WVGES well layer')} built from ${A('https://dep.wv.gov/oil-and-gas/databaseinfo/Pages/default.aspx','WVDEP Office of Oil and Gas')} permits</td><td>⚠ No license posted; credit WVDEP and WVGES; written terms pending</td></tr>
   <tr><td>Flock / ALPR</td><td>${A('https://www.openstreetmap.org/copyright','OpenStreetMap')} via ${A('https://deflock.org','DeFlock')}</td><td>ODbL 1.0 — own file (alpr_odbl.geojson)</td></tr>
