@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="CRAPAPP NOW! Your #1 App for Going #2. Find mapped restrooms near you.">
+  <meta name="theme-color" content="#15483b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CRAPAPP">
+  <meta name="robots" content="noindex,nofollow">
+  <title>CRAPAPP NOW!</title>
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>🚽 CRAPAPP NOW!</h1>
+      <p class="tagline">Your #1 App for Going #2! 🧻</p>
+    </div>
+  </header>
+
+  <main class="app">
+    <div class="controls">
+      <button id="panic" type="button">🚨 I GOTTA CRAP!</button>
+      <div class="tools">
+        <button id="gps" type="button">📍 Near me</button>
+        <button id="demo" type="button">Try Charleston, WV</button>
+        <button id="access" type="button" aria-pressed="false">♿ Accessible only</button>
+      </div>
+    </div>
+
+    <div id="map" role="application" aria-label="Restroom map"></div>
+
+    <section id="sheet" class="sheet" data-state="peek" aria-label="Nearby restrooms">
+      <button id="sheet-handle" class="sheet-handle" type="button" aria-label="Resize list">
+        <span class="grabber"></span>
+      </button>
+      <div class="sheet-head">
+        <h2>Nearby restrooms</h2>
+        <p id="status" role="status">Tap I GOTTA CRAP! to find mapped restrooms near you.</p>
+      </div>
+      <div id="list" class="sheet-list"></div>
+      <p class="legal">
+        Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors.
+        Hours, fees and access come from mapped tags and are unverified.
+        Votes stay on this device.
+      </p>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

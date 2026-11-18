@@ -1,0 +1,24 @@
+{
+  "name": "CRAPAPP NOW!",
+  "short_name": "CRAPAPP",
+  "description": "Your #1 App for Going #2. Find mapped restrooms near you.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef5f1",
+  "theme_color": "#15483b",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
