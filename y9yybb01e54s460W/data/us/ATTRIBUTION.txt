@@ -1,0 +1,34 @@
+Mines & Megawatts — US data centers mockup
+Attribution and licences (16 November 2026)
+
+This folder contains a derived database of US data center campuses.
+
+Campus points and the roster used for state totals
+  Source: Data Centers Near Me, 2026-09-15. Compiled from US public records,
+  OpenStreetMap and named public directories. Retrieved from https://datacentersnearme.org/data.
+  Licence: Open Database License (ODbL) 1.0 — https://opendatacommons.org/licenses/odbl/1-0/
+  The source file itself contains data from OpenStreetMap contributors and
+  DataCentersExposed (both ODbL) and from AI GridWatch (CC BY 4.0).
+  © OpenStreetMap contributors — https://www.openstreetmap.org/copyright
+  DataCentersNearMe withheld 666 campuses from the download
+  (rows whose only source is Cleanview, and Cleanview-sourced status, coordinates, capacity and water on the rest).
+
+  If you publish a database derived from datacenters_odbl.geojson or from the
+  roster in stats.json, you must also offer that database under the ODbL and
+  keep this attribution.
+
+State boundaries
+  U.S. Census Bureau, Cartographic Boundary Files, cb_2024_us_state_20m,
+  https://www2.census.gov/geo/tiger/GENZ2024/shp/cb_2024_us_state_20m.zip. United States public domain.
+
+Electricity rates
+  U.S. Energy Information Administration, Electric Power Monthly Table 5.6.A,
+  August 2026 (preliminary), https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a. United States public domain.
+
+Basemap (the web map, not this folder)
+  OpenFreeMap / OpenMapTiles, © OpenStreetMap contributors.
+
+Estimates
+  Annual energy and cost figures are estimates (50% load factor per LBNL 2024,
+  https://eta-publications.lbl.gov/sites/default/files/2024-12/lbnl-2024-united-states-data-center-energy-usage-report_1.pdf; state industrial average prices from EIA). They are labeled as
+  estimates and are not filed costs.

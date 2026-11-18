@@ -10,7 +10,7 @@
 <title>Mines &amp; Megawatts · West Virginia (private prototype)</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Cpath d=%22M0 0h16L0 16z%22 fill=%22%23c9a227%22/%3E%3Cpath d=%22M16 0v16H0z%22 fill=%22%230079c1%22/%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/maplibre-gl.css">
-<link rel="stylesheet" href="app.css?v=62c18833a2">
+<link rel="stylesheet" href="app.css?v=0bc0e6dcd1">
 </head>
 <body>
 <div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-t">
@@ -30,8 +30,13 @@
   <span class="mark" aria-hidden="true"></span>
   <h1>Mines &amp; Megawatts <span class="sub">West Virginia</span></h1>
   <span class="badge">Prototype</span>
+  <div id="viewsw" role="group" aria-label="Map view">
+    <button type="button" data-view="wv" class="on" aria-pressed="true" title="West Virginia: every layer">WV</button><button type="button" data-view="us" aria-pressed="false" title="United States: data centers by state">US</button>
+  </div>
   <span class="grow"></span>
-  <button id="btn-about" class="textbtn">Sources</button>
+  <button id="btn-search" class="iconbtn" aria-label="Search places, data centers, mines and wells" aria-expanded="false" aria-controls="search" title="Search (/)">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg></button>
+  <button id="btn-about" class="textbtn" aria-label="Sources and credits"><span class="lbl">Sources</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></button>
 </header>
 
 <div id="cards" aria-label="Key numbers"></div>
@@ -44,10 +49,23 @@
     <button role="tab" class="tab" data-tab="charts" aria-selected="false">Charts</button>
   </div>
   <div id="sections" class="tabpane on" data-pane="layers"></div>
+  <div id="us-sections" class="tabpane on" data-pane="layers"></div>
   <div id="charts-m" class="tabpane" data-pane="charts"></div>
 </aside>
 
 <div id="map" aria-label="Map"></div>
+
+<div id="search" role="dialog" aria-label="Search" hidden>
+  <div class="sx-bar">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>
+    <input id="sx-q" type="search" role="combobox" aria-autocomplete="list" aria-expanded="true" aria-controls="sx-r" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="State, county, town, data center, mine, charging, well API…" enterkeyhint="search">
+    <button id="sx-x" class="iconbtn" aria-label="Close search"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <ul id="sx-r" role="listbox" aria-label="Search results"></ul>
+  <p class="sx-foot">Searches the data inside the app. Towns and counties: U.S. Census 2024 Gazetteer.</p>
+</div>
+
+<div id="offline" role="status" hidden><b>You're offline.</b> The map background and terrain need an internet connection. Reconnect, then <button id="offline-retry" type="button">Retry</button></div>
 
 <div id="legend" class="box"><button id="legend-h" aria-expanded="true">Legend</button><div id="legend-b"></div></div>
 
@@ -60,6 +78,6 @@
 <div id="disc">For information only. <b>Not for engineering, legal, or investment decisions.</b> Estimates are labeled. ⚠ = unverified.</div>
 
 <script src="vendor/maplibre-gl.js"></script>
-<script src="app.js?v=62c18833a2"></script>
+<script src="app.js?v=0bc0e6dcd1"></script>
 </body>
 </html>
