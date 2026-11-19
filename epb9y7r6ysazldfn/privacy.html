@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy · Quirk Atlas</title>
+<meta name="description" content="Privacy policy for Quirk Atlas. This site does not use tracking, analytics, or advertising cookies.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://quirkatlas.com/privacy.html">
+<style>
+*{box-sizing:border-box}
+@font-face{font-family:Fraunces;font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/Fraunces-latin-variable.woff2) format("woff2")}
+@font-face{font-family:"Source Sans 3";font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/SourceSans3-latin-variable.woff2) format("woff2")}
+body{margin:0;font-family:"Source Sans 3",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#1d232a;background:#f7f5f1;line-height:1.55}
+header{background:#1d232a;color:#f7f5f1;padding:16px 20px}
+header a{color:#f7f5f1;text-decoration:none;font-family:Fraunces,Georgia,serif;font-weight:650;font-size:1.15rem}
+header a.brand-link{display:flex;align-items:center;gap:12px;width:fit-content}
+header a.brand-link img{height:28px;width:auto;display:block}
+header a.brand-link .place{font-size:1rem;font-weight:600;opacity:.92}
+header .by{font-size:12px;color:#b9c0c7;margin:2px 0 0;font-family:"Source Sans 3",system-ui,sans-serif;font-weight:400}
+header .by a{color:#d7dde2;font-family:inherit;font-weight:600;font-size:inherit}
+h1,h2{font-family:Fraunces,Georgia,serif;font-weight:650;letter-spacing:-0.02em}
+a{color:#9A3412}
+main{max-width:42rem;margin:0 auto;padding:28px 20px 64px}
+h1{font-size:1.6rem;margin:0 0 8px}
+h2{font-size:1.15rem;margin:28px 0 8px}
+p,li{font-size:16px}
+footer{max-width:42rem;margin:0 auto;padding:0 20px 40px;font-size:13px;color:#5a6470}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="brand-link"><img src="brand/wordmark-on-dark.png" alt="Quirk Atlas" width="128" height="28"><span class="place">West Virginia</span></a>
+  <p class="by">by <a href="https://www.jupiterrockets.com/">Jupiter Rockets</a></p>
+</header>
+<main>
+  <h1>Privacy</h1>
+  <p>Last updated November 17, 2026.</p>
+  <p>Quirk Atlas is a static map site from Jupiter Rockets. It is a beta, and a work in progress. This page explains what this website does and does not collect.</p>
+
+  <h2>No tracking</h2>
+  <p>This site does not use analytics, advertising, or tracking cookies. It does not run a login or collect accounts. We do not sell or share personal information, because we do not collect a personal profile about you.</p>
+
+  <h2>What happens in your browser</h2>
+  <ul>
+    <li>Map tiles are loaded from <a href="https://openfreemap.org/">OpenFreeMap</a>. MapLibre GL JS is loaded from a public CDN (unpkg).</li>
+    <li>Layer data for this site is served from this same website (this domain or the GitHub Pages host that serves it). Nothing is fetched from jupiterrockets.com to draw the map.</li>
+    <li>The Places search, used only when you submit it, sends the search text to OpenStreetMap <a href="https://operations.osmfoundation.org/policies/nominatim/">Nominatim</a>, limited to West Virginia, at most one request per second.</li>
+    <li>Near Me and the map’s locate button ask for your device location only when you tap them. The location stays in this browser so the map can show nearby places. We do not store it, and we do not send it to Jupiter Rockets or to this website’s host.</li>
+    <li>Road-trip routing is optional. When you tap “Find quirks along the way,” the start and end coordinates (which may be your location, a searched town, or a map tap) are sent to the <a href="https://routing.openstreetmap.de/about.html">FOSSGIS OSRM public routing server</a> to calculate a driving route. FOSSGIS may log those requests; see their privacy policy. Nothing about the route is sent to us. If that server is unavailable, the page falls back to a straight-line corridor on your device and does not send the coordinates.</li>
+    <li>Share links are ordinary page addresses with a <code>#</code> hash, including <code>#r=</code> road-trip links and <code>#y=</code> Time Machine year links. Copying or sharing one does not notify us.</li>
+    <li>Time Machine filters the layers already on the map by dates in those records. When you open it, it loads one historic-borders file from this site (<code>wv-map-data/borders.json</code>). It does not send your chosen year anywhere.</li>
+    <li>A few preferences may be saved in your browser’s local storage on this device only, including whether you have dismissed the welcome sheet and unlocking the Pepperoni Roll Trail.</li>
+  </ul>
+
+  <h2>Data credits</h2>
+  <p>The map and its layers use open or public sources. Please credit them if you reuse the data:</p>
+  <ul>
+    <li><a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors (ODbL). The basemap, the West Virginia outline, some place data, and driving routes are derived from OSM. Changed OSM-derived databases must also be shared under ODbL. Please <a href="https://www.openstreetmap.org/fixthemap">fix the map</a> if a road or place looks wrong.</li>
+    <li>Time Machine historic borders: <a href="https://publications.newberry.org/ahcb/">Atlas of Historical County Boundaries, The Newberry Library</a>, used under <a href="https://creativecommons.org/licenses/by-nc-sa/2.5/">CC BY-NC-SA 2.5</a>. Our generalized, clipped copy is shared under the same license. ⚠ This license is NonCommercial, so commercial use needs the Newberry's permission or a different source. Time Machine milestones: e-WV (West Virginia Humanities Council), the National Archives, the Library of Virginia, NPS and PBS, with links on each milestone.</li>
+    <li>Driving routes: <a href="https://project-osrm.org/">Open Source Routing Machine (OSRM)</a> via the <a href="https://routing.openstreetmap.de/about.html">FOSSGIS public demo</a> (reasonable, non-commercial, non-heavy use; at most one request per second; no uptime guarantee). ⚠ This is a public demo, not a production SLA. If traffic grows or the app is sold, we should move to a self-hosted or paid router.</li>
+    <li>Map rendering: <a href="https://maplibre.org/">MapLibre GL JS</a>. Tiles: <a href="https://openfreemap.org/">OpenFreeMap</a> / OpenMapTiles.</li>
+    <li>Mine disasters: <a href="https://minesafety.wv.gov/historical-statistical-data/wv-mine-disasters-1884-to-present/">WV Office of Miners’ Health, Safety &amp; Training (OMHST)</a>, plus <a href="https://wwwn.cdc.gov/NIOSH-Mining/MMWC/MineDisasters/Table">NIOSH</a> and <a href="https://www.msha.gov/data-and-reports/mine-data-retrieval-system">MSHA</a>.</li>
+    <li>Mining context and some mine-disaster locations: <a href="https://www.wvgs.wvnet.edu/">West Virginia Geological and Economic Survey (WVGES)</a>. WVGES records draw on data from the federal Office of Surface Mining and the WV Office of Miners’ Health, Safety and Training.</li>
+    <li>Abandoned mine sites: <a href="https://tagis.dep.wv.gov/home/gis%20data">WVDEP Abandoned Mine Lands</a>.</li>
+    <li>Rivers and streams: <a href="https://www.usgs.gov/national-hydrography/national-hydrography-dataset">USGS National Hydrography Dataset</a> (U.S. government work, public domain). Lines are generalized for the map.</li>
+    <li>Whitewater rafting: run facts from the <a href="https://www.nps.gov/neri/planyourvisit/whitewater.htm">National Park Service</a>, <a href="https://wvtourism.com/things-to-do/outdoor-adventures/whitewater-rafting/">WV Tourism</a>, the <a href="https://www.lrh-wc.usace.army.mil/wm/pages/wwsched.html">U.S. Army Corps of Engineers</a>, and W.Va. CSR 58-12 designated zones. Put-ins and take-outs use official <a href="https://wvdnr.gov/gis-mapping/">WVDNR</a> public access sites, NPS-named accesses, and <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (ODbL) locations. Licensed commercial outfitters come from the <a href="https://whitewater.wvdnr.gov/OutfittersAndGuides?Area=OutfittersAndGuides">WVDNR Whitewater Commission</a> list, geocoded with the U.S. Census geocoder or OpenStreetMap. Run lines follow the USGS river map between those access points and are generalized for the map.</li>
+    <li>Fishing: a simplified derivative of public <a href="https://wvdnr.gov/gis-mapping/">West Virginia Division of Natural Resources</a> Wildlife Resources Section GIS datasets (public fishing access sites, trout-stocked streams, and public fishing lakes). Credit: West Virginia Division of Natural Resources. This is not an official WVDNR map or dataset. West Virginia Division of Natural Resources is the authoritative source for all official hunting, fishing, and regulatory information. In case of discrepancies, the <a href="https://wvdnr.gov/fishing/fishing-regulations/">West Virginia Fishing Regulations</a> take precedence. Check the current <a href="https://wvdnr.gov/fishing/fish-stocking/">trout stocking report</a> for recent stockings. Full original GIS datasets are not redistributed.</li>
+    <li>State parks, state forests, and wildlife management areas: <a href="https://www.wvdnr.gov/">West Virginia Division of Natural Resources</a> public-land boundaries via the <a href="https://www.mapwv.gov/">WV GIS Technical Center</a>. ⚠ The public service does not state a reuse license; credit WVDNR and WVGISTC. Summersville Lake State Park’s point is from <a href="https://www.wikidata.org/">Wikidata</a> (CC0).</li>
+    <li>Scenic byways and backways: <a href="https://transportation.wv.gov/">West Virginia Department of Transportation</a> Linear Referencing System (current scenic-byway events). ⚠ The service does not state a reuse license; credit WVDOT. National designations and some route descriptions: <a href="https://fhwaapps.fhwa.dot.gov/bywaysp/States/Show/WV">FHWA America’s Byways</a> (U.S. government work).</li>
+    <li>Breweries and wineries: public taprooms and tasting rooms curated from <a href="https://wvtourism.com/things-to-do/arts-culture-history/dining-drinks/craft-beer/">WV Tourism craft beer</a> and <a href="https://wvtourism.com/wineries/">wineries</a> pages, the <a href="https://abca.wv.gov/media/32647/download?inline=">WV Alcohol Beverage Control Administration Resident Brewers list (July 2025)</a> and <a href="https://abca.wv.gov/media/32657/download?inline=">FY2025 annual report</a>, and the <a href="https://agriculture.wv.gov/wp-content/uploads/WVG-Directory-South-East.pdf">WV Department of Agriculture West Virginia Grown directory</a>. <a href="https://www.openbrewerydb.org/">Open Brewery DB</a> (MIT License, © 2025 Open Brewery DB) was used only as a lead list, not as the authority for operating status or coordinates. Some locations use the U.S. Census geocoder, <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (ODbL), or the <a href="https://www.mapwv.gov/">WV GIS Technical Center</a> site-address locator (credit WVGISTC, WVDHSEM, and county address coordinators). Photos appear only when a Wikimedia Commons file allows reuse with credit; the author and license are named on the card.</li>
+    <li>Card descriptions and some coordinates also come from <a href="https://www.wikidata.org/">Wikidata</a> (CC0) and <a href="https://en.wikipedia.org/">Wikipedia</a> introductions (CC BY-SA). Photos appear only when a Wikimedia Commons file is public domain, CC0, CC BY, or CC BY-SA; each card credits the author and license.</li>
+  </ul>
+  <p>This map is not for engineering, legal, or safety use. Locations can be approximate.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about privacy or this site: <a href="mailto:juju655321@gmail.com">juju655321@gmail.com</a>. See also <a href="support.html">Support</a>.</p>
+</main>
+<footer>
+  <p><a href="index.html">Back to the map</a> · <a href="support.html">Support</a> · <a href="https://www.jupiterrockets.com/">Jupiter Rockets</a></p>
+</footer>
+</body>
+</html>
