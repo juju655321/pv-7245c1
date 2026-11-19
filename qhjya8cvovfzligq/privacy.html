@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#15483b">
+  <title>Privacy · CRAPAPP NOW!</title>
+  <meta name="description" content="Privacy policy for CRAPAPP NOW! No accounts, no tracking, no ads. Your location is used to find restrooms and is never sent to us.">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="canonical" href="https://crapappnow.com/privacy.html">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font:16px/1.55 system-ui,"Segoe UI",sans-serif;color:#153d35;background:#eef5f1}
+    header{background:#15483b;color:#fff;padding:calc(14px + env(safe-area-inset-top,0px)) max(20px,calc(env(safe-area-inset-right,0px) + 8px)) 14px max(20px,calc(env(safe-area-inset-left,0px) + 8px))}
+    header a{color:#fff;text-decoration:none;font-weight:800;font-size:1.25rem}
+    header a.brand{display:inline-flex;align-items:center;gap:10px}
+    header a.brand img{border-radius:8px;flex:none}
+    header p{margin:2px 0 0;font-size:13px;opacity:.9}
+    header p a{font-size:inherit;font-weight:600;text-decoration:underline}
+    main{max-width:42rem;margin:0 auto;padding:24px max(20px,calc(env(safe-area-inset-right,0px) + 8px)) calc(56px + env(safe-area-inset-bottom,0px)) max(20px,calc(env(safe-area-inset-left,0px) + 8px))}
+    h1{font-size:1.6rem;margin:0 0 6px}
+    h2{font-size:1.1rem;margin:26px 0 8px}
+    a{color:#1c5c4c}
+    li{margin:4px 0}
+    .back{display:inline-block;margin-top:24px;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img src="icons/logo-header.png" width="34" height="34" alt="">CRAPAPP NOW!</a>
+    <p>by <a href="https://www.jupiterrockets.com/">Jupiter Rockets</a></p>
+  </header>
+  <main>
+    <h1>Privacy</h1>
+    <p>Last updated November 19, 2026.</p>
+    <p>CRAPAPP NOW! is a free restroom finder from Jupiter Rockets, on the web at crapappnow.com and as an Android and iPhone app. It is a beta. This page explains what the app does and does not collect.</p>
+
+    <h2>The short version</h2>
+    <ul>
+      <li>No accounts, no sign-in, no ads, no analytics, no tracking cookies, and no crash-reporting or advertising SDKs.</li>
+      <li>Jupiter Rockets runs no server for this app. We never receive your location, your searches, or your ratings.</li>
+      <li>We don't sell or share personal information, because we don't collect any.</li>
+    </ul>
+
+    <h2>Your location</h2>
+    <p>The app asks for your device location only when you tap <b>I GOTTA CRAP!</b> or <b>Near me</b>. It never tracks you in the background. Your phone uses the location to draw the map and sort restrooms by distance. To find restrooms nearby, the app sends a search around that point straight from your device to public restroom data services (below). It does not send the location to Jupiter Rockets, and the app does not store it after you close it. If you say no to location, you can still use <b>Try Charleston, WV</b>.</p>
+
+    <h2>Services your device talks to</h2>
+    <ul>
+      <li><b>Map tiles</b> come from <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'s tile servers (<a href="https://osmfoundation.org/wiki/Privacy_Policy">OSMF privacy policy</a>).</li>
+      <li><b>Restroom data</b> comes from the OpenStreetMap <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a> (public servers run by volunteers, including overpass-api.de, overpass.kumi.systems and overpass.private.coffee). The request contains the map area around your search point.</li>
+      <li>If those servers are busy, the app asks <a href="https://www.refugerestrooms.org/">Refuge Restrooms</a> for nearby restrooms instead, sending the same search point.</li>
+      <li><b>Directions</b> open Apple Maps or Google Maps with the restroom's coordinates only when you tap Directions. Those apps have their own privacy policies.</li>
+      <li>On the website only, the map library (Leaflet) loads from the unpkg CDN. The phone apps bundle it.</li>
+    </ul>
+    <p>Like any web request, these services can see your device's IP address. Jupiter Rockets doesn't control them or get any data from them.</p>
+
+    <h2>What stays on your device</h2>
+    <ul>
+      <li>Toilet-paper ratings you give a restroom are saved in this browser or app's local storage only. Nobody else sees them.</li>
+      <li>Recent restroom search results are cached on the device for about 15 minutes so the app is faster and lighter on the free servers.</li>
+      <li>Clear the site data in your browser, or uninstall the app, to delete all of it.</li>
+    </ul>
+
+    <h2>Children</h2>
+    <p>The app isn't directed at children and doesn't knowingly collect information from anyone.</p>
+
+    <h2>Accuracy</h2>
+    <p>Restroom locations, hours, fees and accessibility come from community map data and may be wrong or out of date. Open-now labels are unverified. Please <a href="https://www.openstreetmap.org/fixthemap">fix the map</a> if you spot a mistake.</p>
+
+    <h2>Credits</h2>
+    <p>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL). Some results from <a href="https://www.refugerestrooms.org/">Refuge Restrooms</a>. Map display by <a href="https://leafletjs.com/">Leaflet</a> (BSD-2-Clause). Apps built with <a href="https://capacitorjs.com/">Capacitor</a> (MIT).</p>
+
+    <h2>Changes and contact</h2>
+    <p>If this policy changes, we'll update this page and the date above. Questions: <a href="mailto:juju655321@gmail.com">juju655321@gmail.com</a>.</p>
+    <a class="back" href="./">← Back to CRAPAPP NOW!</a>
+  </main>
+</body>
+</html>
