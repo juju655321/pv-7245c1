@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="CRAPAPP NOW! Your #1 App for Going #2. Find mapped restrooms near you.">
+  <meta name="theme-color" content="#15483b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CRAPAPP">
+  <title>CRAPAPP NOW!</title>
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-logo" src="icons/logo-header.png" width="52" height="52" alt="">
+      <div class="brand-text">
+        <h1>CRAPAPP NOW!</h1>
+        <p class="tagline">Your #1 App for Going #2! 🧻</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app">
+    <div class="controls">
+      <button id="panic" type="button">🚨 I GOTTA CRAP!</button>
+      <form id="place-form" class="place-form" role="search" autocomplete="off">
+        <label class="sr-only" for="place">Search a city, address or place</label>
+        <input id="place" name="q" type="search" inputmode="search" enterkeyhint="search" maxlength="120"
+               placeholder="Search a city, address or place" aria-describedby="status">
+        <button id="place-go" type="submit">🔎 Search</button>
+      </form>
+      <div class="tools">
+        <button id="gps" type="button">📍 Near me</button>
+        <button id="demo" type="button">Try Charleston, WV</button>
+        <button id="access" type="button" aria-pressed="false">♿ Accessible only</button>
+      </div>
+    </div>
+
+    <div id="map" role="application" aria-label="Restroom map"></div>
+
+    <section id="sheet" class="sheet" data-state="peek" aria-label="Nearby restrooms">
+      <div class="sheet-top" id="sheet-top">
+        <button id="sheet-handle" class="sheet-handle" type="button" aria-label="Resize list">
+          <span class="grabber"></span>
+        </button>
+        <div class="sheet-head">
+          <div class="sheet-title">
+            <h2 id="sheet-title">Nearby restrooms</h2>
+            <button id="sheet-size" class="sheet-size" type="button" aria-controls="sheet">See all ▲</button>
+          </div>
+          <p id="status" role="status">Tap I GOTTA CRAP! to find mapped restrooms near you, or search a place.</p>
+          <div id="matches" class="matches" hidden></div>
+        </div>
+      </div>
+      <div id="sheet-scroll" class="sheet-scroll">
+        <div id="list" class="sheet-list"></div>
+        <p class="legal">
+          Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors.
+          Place search by <a href="https://nominatim.org/" target="_blank" rel="noopener">Nominatim</a> (fallback <a href="https://photon.komoot.io/" target="_blank" rel="noopener">Photon</a>).
+          Hours, fees and access come from mapped tags and are unverified.
+          Votes stay on this device.
+          <a href="privacy.html">Privacy</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
